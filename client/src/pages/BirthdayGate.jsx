@@ -82,7 +82,7 @@ export default function BirthdayGate() {
     } else if (n === 1) {
       setBlowPrompt('Ooo… the flames just laughed at you. Blow again!');
     } else if (n === 2) {
-      setBlowPrompt('So close! Now blow it HARDER 🌬️💨');
+      setBlowPrompt('So close! Now blow it HARDER like you blow me 🌬️💨');
     } else {
       setBlowPrompt('HARDER! Give it everything 🌪️');
     }

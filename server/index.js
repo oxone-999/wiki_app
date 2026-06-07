@@ -16,10 +16,18 @@ const app = express();
 
 // Allow the Netlify frontend (and local dev). Set CLIENT_ORIGIN on Render to
 // your Netlify URL; comma-separate multiple origins if needed.
-const allowed = (process.env.CLIENT_ORIGIN || '').split(',').map((s) => s.trim()).filter(Boolean);
+// Normalised (lowercased, trailing slash stripped) so a stray "/" in the env
+// var doesn't silently break CORS. Also always allows *.netlify.app.
+const norm = (s) => s.trim().toLowerCase().replace(/\/+$/, '');
+const allowed = (process.env.CLIENT_ORIGIN || '').split(',').map(norm).filter(Boolean);
 app.use(
   cors({
-    origin: allowed.length ? allowed : true,
+    origin(origin, cb) {
+      if (!origin) return cb(null, true); // curl / same-origin / server-to-server
+      const o = norm(origin);
+      const ok = allowed.length === 0 || allowed.includes(o) || /\.netlify\.app$/.test(o);
+      cb(null, ok);
+    },
   })
 );
 app.use(express.json());
