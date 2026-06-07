@@ -6,7 +6,7 @@
 const API_BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '');
 
 const TOKEN_KEY = 'bw_admin_token';
-const BACKEND_URL = 'http://localhost:5000'; // dev fallback
+const BACKEND_URL = 'https://wiki-app-0w5d.onrender.com'; // fallback if VITE_API_BASE unset
 // Production (Netlify build with VITE_API_BASE set) -> Render URL. Dev -> localhost.
 const ORIGIN = API_BASE || BACKEND_URL;
 
