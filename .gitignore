@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+server/.env
+# Photos: keep originals (800MB+) and videos OUT of git/deploy.
+# Commit only the small web-ready thumbs/ + medium/ that the deployed site uses.
+server/photos/*
+!server/photos/README.txt
+!server/photos/thumbs/
+!server/photos/medium/
+*.mp4
+
+.DS_Store
+*.log

@@ -1,0 +1,25 @@
+# Render blueprint for the backend (server/).
+# Deploy: New + > Blueprint, point at this repo. Then fill the env vars marked
+# sync:false in the Render dashboard (they aren't committed).
+services:
+  - type: web
+    name: anwipedia-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: MONGODB_URI
+        sync: false # paste your MongoDB Atlas connection string
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: CLIENT_ORIGIN
+        sync: false # your Netlify URL, e.g. https://anwipedia.netlify.app
+      - key: NODE_VERSION
+        value: "20"

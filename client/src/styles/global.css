@@ -1,0 +1,55 @@
+:root {
+  /* Gothic palette */
+  --goth-bg: #0a0608;
+  --goth-bg2: #160913;
+  --goth-violet: #2a1230;
+  --goth-rose: #b3123f;
+  --goth-rose-soft: #e0457a;
+  --goth-gold: #c9a24b;
+  --goth-ink: #ece0e6;
+
+  /* Pink wiki palette */
+  --pink-bg: #fff5f9;
+  --pink-panel: #ffeaf2;
+  --pink-border: #f6c6da;
+  --pink-accent: #e0457a;
+  --pink-link: #c2185b;
+  --pink-ink: #3a2630;
+  --pink-muted: #8a6b77;
+
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --display: 'Cinzel', serif;
+  --hand: 'Caveat', cursive;
+  --wiki-serif: 'Linux Libertine', 'Georgia', serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--serif);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}

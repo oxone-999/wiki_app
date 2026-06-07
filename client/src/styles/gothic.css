@@ -1,0 +1,440 @@
+.gothic {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(1200px 700px at 50% -10%, var(--goth-violet) 0%, transparent 60%),
+    radial-gradient(900px 600px at 50% 120%, #2a0a18 0%, transparent 60%),
+    linear-gradient(160deg, var(--goth-bg) 0%, var(--goth-bg2) 100%);
+  color: var(--goth-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* keep candles/title/frame/hint above the storm + creatures */
+.gothic > .goth-title,
+.gothic > .goth-sub,
+.gothic > .candles,
+.gothic > .goth-frame,
+.gothic > .goth-hint { position: relative; z-index: 3; }
+
+/* ===== Infinite lightning storm background ===== */
+.storm {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.storm-flash {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1000px 700px at 30% 20%, rgba(150, 170, 255, 0.5), transparent 60%),
+    radial-gradient(900px 600px at 75% 30%, rgba(190, 160, 255, 0.4), transparent 60%);
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+.storm-flash.f1 { animation: flash 7s infinite; }
+.storm-flash.f2 { animation: flash 11s infinite 2.3s; }
+.storm-flash.f3 { animation: flash 9.5s infinite 5s; }
+@keyframes flash {
+  0%, 100% { opacity: 0; }
+  1.5% { opacity: 0.9; }
+  3% { opacity: 0.15; }
+  4.5% { opacity: 0.75; }
+  7% { opacity: 0; }
+}
+/* The travelling jagged bolt path */
+.lightning-bolt {
+  position: absolute;
+  top: -5%;
+  left: 50%;
+  width: 40%;
+  height: 110%;
+  transform: translateX(-50%);
+  opacity: 0;
+  filter: drop-shadow(0 0 6px #aeb6ff) drop-shadow(0 0 14px #6f7bff);
+  animation: bolt 7s infinite;
+}
+.lightning-bolt.b2 { left: 22%; width: 28%; animation: bolt 11s infinite 2.3s; }
+.lightning-bolt.b3 { left: 78%; width: 30%; animation: bolt 9.5s infinite 5s; }
+.lightning-bolt path { stroke: #dfe4ff; stroke-width: 2.5; fill: none; }
+@keyframes bolt {
+  0%, 100% { opacity: 0; }
+  1.5% { opacity: 1; }
+  3.5% { opacity: 0; }
+  4.5% { opacity: 0.8; }
+  6% { opacity: 0; }
+}
+
+/* ===== Spiders dangling on threads ===== */
+.spider {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  pointer-events: none;
+  transform: translateY(calc(-1 * var(--drop)));
+  animation-name: spider-drop;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes spider-drop {
+  0% { transform: translateY(calc(-1 * var(--drop) - 40px)); }
+  25% { transform: translateY(var(--drop)); }
+  55% { transform: translateY(calc(var(--drop) - 24px)); }
+  80% { transform: translateY(var(--drop)); }
+  100% { transform: translateY(calc(-1 * var(--drop) - 40px)); }
+}
+.spider-legs { animation: leg-jitter 0.35s infinite alternate; transform-origin: center; }
+@keyframes leg-jitter {
+  from { transform: scaleX(1) scaleY(1); }
+  to { transform: scaleX(1.08) scaleY(0.94); }
+}
+
+/* ===== Bats ===== */
+.bat-flyer {
+  position: fixed;
+  left: -8%;
+  z-index: 2;
+  pointer-events: none;
+  animation-name: bat-cross;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes bat-cross {
+  0% { transform: translateX(-10vw) translateY(0); }
+  25% { transform: translateX(28vw) translateY(-26px); }
+  50% { transform: translateX(56vw) translateY(18px); }
+  75% { transform: translateX(84vw) translateY(-22px); }
+  100% { transform: translateX(120vw) translateY(0); }
+}
+.bat-wing { transform-box: fill-box; transform-origin: center; animation: flap 0.28s infinite alternate; }
+.bat-wing-l { transform-origin: right center; }
+.bat-wing-r { transform-origin: left center; }
+@keyframes flap {
+  from { transform: scaleX(1) scaleY(1); }
+  to { transform: scaleX(0.55) scaleY(1.1); }
+}
+.bat-hang {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  pointer-events: none;
+  transform: scaleY(-1);
+  transform-origin: top center;
+  animation: hang-sway 4s ease-in-out infinite;
+}
+.bat-hang-l { left: 6%; }
+.bat-hang-r { right: 6%; }
+@keyframes hang-sway {
+  0%, 100% { transform: scaleY(-1) rotate(-6deg); }
+  50% { transform: scaleY(-1) rotate(6deg); }
+}
+
+/* Ornate corner filigree */
+.goth-corner {
+  position: fixed;
+  width: 160px;
+  height: 160px;
+  border: 2px solid var(--goth-gold);
+  opacity: 0.28;
+  pointer-events: none;
+}
+.goth-corner.tl { top: 18px; left: 18px; border-right: 0; border-bottom: 0; border-top-left-radius: 40px; }
+.goth-corner.tr { top: 18px; right: 18px; border-left: 0; border-bottom: 0; border-top-right-radius: 40px; }
+.goth-corner.bl { bottom: 18px; left: 18px; border-right: 0; border-top: 0; border-bottom-left-radius: 40px; }
+.goth-corner.br { bottom: 18px; right: 18px; border-left: 0; border-top: 0; border-bottom-right-radius: 40px; }
+
+.goth-title {
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  font-size: clamp(1.8rem, 5vw, 3.6rem);
+  margin: 0 0 0.2em;
+  background: linear-gradient(180deg, #fff, var(--goth-rose-soft) 70%, var(--goth-rose));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 30px rgba(224, 69, 122, 0.25);
+}
+
+.goth-sub {
+  font-style: italic;
+  font-size: clamp(1rem, 2.4vw, 1.5rem);
+  color: #d9b9c7;
+  margin-bottom: 2rem;
+  letter-spacing: 0.05em;
+}
+
+/* Portrait inside an ornate frame */
+.goth-frame {
+  position: relative;
+  width: clamp(220px, 40vw, 340px);
+  aspect-ratio: 3 / 4;
+  border: 3px solid var(--goth-gold);
+  border-radius: 50% 50% 48% 48% / 38% 38% 62% 62%;
+  padding: 10px;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(224, 69, 122, 0.18), transparent 70%),
+    rgba(0, 0, 0, 0.4);
+  box-shadow:
+    0 0 0 8px rgba(201, 162, 75, 0.12),
+    0 0 60px rgba(224, 69, 122, 0.35),
+    inset 0 0 40px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+.goth-frame:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow:
+    0 0 0 8px rgba(201, 162, 75, 0.25),
+    0 0 90px rgba(224, 69, 122, 0.6),
+    inset 0 0 40px rgba(0, 0, 0, 0.5);
+}
+.goth-frame img,
+.goth-frame .goth-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50% 50% 48% 48% / 38% 38% 62% 62%;
+  filter: grayscale(0.25) contrast(1.05);
+}
+.goth-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--hand);
+  font-size: 1.4rem;
+  color: #b98aa0;
+  background: repeating-linear-gradient(45deg, #1a0d16, #1a0d16 12px, #220f1c 12px, #220f1c 24px);
+}
+
+.goth-hint {
+  margin-top: 1.6rem;
+  font-family: var(--hand);
+  font-size: 1.5rem;
+  color: var(--goth-gold);
+  opacity: 0.9;
+}
+
+/* Candles */
+.candles {
+  display: flex;
+  gap: 1.1rem;
+  margin-bottom: 1.4rem;
+}
+.candles { --wind: 0deg; --flameop: 1; }
+.candle {
+  position: relative;
+  width: 12px;
+  height: 54px;
+  background: linear-gradient(#f6e7d8, #d9b48a);
+  border-radius: 3px;
+}
+.flame {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  width: 12px;
+  height: 22px;
+  margin-left: -6px;
+  background: radial-gradient(circle at 50% 70%, #fff 0%, #ffd24a 40%, #ff7b00 75%, transparent 80%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  transform-origin: 50% 100%;
+  /* `rotate` (individual transform) carries the mic wind; `transform` keeps the
+     flicker independent so the two never fight. */
+  rotate: var(--wind, 0deg);
+  transition: rotate 0.07s linear;
+  animation: flicker 0.18s infinite alternate;
+  box-shadow: 0 0 18px 6px rgba(255, 150, 0, calc(0.45 * var(--flameop, 1)));
+}
+@keyframes flicker {
+  from { transform: scaleY(1) rotate(-2deg); opacity: 0.95; }
+  to { transform: scaleY(1.12) rotate(2deg); opacity: 1; }
+}
+
+/* Drifting petals / bats */
+.drifter {
+  position: fixed;
+  top: -40px;
+  pointer-events: none;
+  opacity: 0.7;
+  animation: fall linear infinite;
+  user-select: none;
+}
+@keyframes fall {
+  0% { transform: translateY(-40px) translateX(0) rotate(0deg); }
+  100% { transform: translateY(110vh) translateX(40px) rotate(360deg); }
+}
+
+/* Curtain transition overlay */
+.curtains {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  pointer-events: none;
+}
+.curtain {
+  flex: 1;
+  background:
+    linear-gradient(90deg, #1a0008, #4a0a1f 50%, #1a0008),
+    var(--goth-rose);
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.8);
+}
+
+.music-toggle {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 30;
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--goth-gold);
+  border: 1px solid var(--goth-gold);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-family: var(--serif);
+  letter-spacing: 0.05em;
+}
+
+/* Wish modal */
+.wish-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(5, 2, 6, 0.82);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.wish-card {
+  width: min(560px, 100%);
+  background: linear-gradient(180deg, #1c0e18, #120710);
+  border: 1px solid var(--goth-gold);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 0 60px rgba(224, 69, 122, 0.3);
+  text-align: left;
+}
+.wish-card h2 {
+  font-family: var(--display);
+  text-align: center;
+  color: var(--goth-rose-soft);
+  letter-spacing: 0.08em;
+  margin-top: 0;
+}
+.wish-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid #4a2c3a;
+  border-radius: 10px;
+  color: var(--goth-ink);
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  padding: 0.7rem 0.9rem;
+  margin-bottom: 0.6rem;
+  resize: vertical;
+}
+.wish-input:focus {
+  outline: none;
+  border-color: var(--goth-rose-soft);
+}
+.wish-add {
+  background: none;
+  border: 1px dashed var(--goth-gold);
+  color: var(--goth-gold);
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  margin-bottom: 1rem;
+}
+.wish-disclaimer {
+  font-size: 0.85rem;
+  color: #9d7d8b;
+  font-style: italic;
+  text-align: center;
+  margin: 1rem 0;
+  line-height: 1.5;
+}
+.wish-submit {
+  display: block;
+  width: 100%;
+  background: linear-gradient(180deg, var(--goth-rose-soft), var(--goth-rose));
+  border: none;
+  color: #fff;
+  font-family: var(--display);
+  letter-spacing: 0.1em;
+  font-size: 1.05rem;
+  padding: 0.9rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(224, 69, 122, 0.4);
+}
+.wish-submit:disabled { opacity: 0.6; cursor: default; }
+
+.wish-granted {
+  text-align: center;
+  font-family: var(--display);
+  color: var(--goth-gold);
+  font-size: 1.6rem;
+  letter-spacing: 0.1em;
+}
+
+/* ===== Mic-blow ritual UI ===== */
+.blow-btn {
+  position: relative;
+  z-index: 3;
+  margin-top: 0.6rem;
+  background: rgba(0, 0, 0, 0.45);
+  color: var(--goth-rose-soft);
+  border: 1px solid var(--goth-rose-soft);
+  border-radius: 999px;
+  padding: 0.6rem 1.2rem;
+  font-family: var(--serif);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  box-shadow: 0 0 24px rgba(224, 69, 122, 0.3);
+}
+.blow-prompt {
+  color: var(--goth-rose-soft) !important;
+  font-family: var(--display);
+  letter-spacing: 0.04em;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 0.75; } 50% { opacity: 1; } }
+.blow-denied {
+  position: relative;
+  z-index: 3;
+  color: #b98aa0;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* ===== Mobile / responsive ===== */
+@media (max-width: 640px) {
+  .gothic { padding: 1.2rem 1rem; }
+  .goth-corner { width: 84px; height: 84px; }
+  .goth-corner.tl, .goth-corner.tr { top: 10px; }
+  .goth-corner.bl, .goth-corner.br { bottom: 10px; }
+  .goth-corner.tl, .goth-corner.bl { left: 10px; }
+  .goth-corner.tr, .goth-corner.br { right: 10px; }
+  .goth-frame { width: min(70vw, 260px); }
+  .candles { gap: 0.7rem; }
+  .goth-hint { font-size: 1.25rem; }
+  .bat-hang-l { left: 2%; }
+  .bat-hang-r { right: 2%; }
+  .music-toggle { bottom: 12px; right: 12px; padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+  .wish-card { padding: 1.4rem; }
+  /* Slower drifters + fewer flashes ease mobile GPUs */
+  .storm-flash { opacity: 0; }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .drifter, .bat-flyer, .spider, .swirls, .storm-flash, .lightning-bolt { animation: none !important; }
+}
